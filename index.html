@@ -1,12 +1,639 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="refresh" content="0; url=238.html">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>MANICALAND STATE UNIVERSITY OF APPLIED SCIENCES Career Hub</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Campus Directory</title>
+<style>
+  :root{
+    --bg:#f3f6f8; --card:#ffffff; --text:#1d2430; --muted:#5d6877; --line:#dde3ea;
+    --admin:#2563eb; --acad:#16a34a; --amen:#b07a45; --health:#7c5ce0; --sports:#0f766e; --accent:#2563eb;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--bg:#161b22; --card:#1f262f; --text:#e8edf3; --muted:#9aa6b5; --line:#303a46;}
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding:24px}
+  .wrap{max-width:1100px;margin:0 auto}
+  h1{margin:0 0 4px;font-size:1.6rem}
+  .sub{color:var(--muted);margin:0 0 18px}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+  .tab{border:0;background:var(--card);color:var(--text);padding:10px 18px;border-radius:999px;font-size:.95rem;cursor:pointer;border:1px solid var(--line)}
+  .tab.active{background:#dbe8ff;color:var(--accent);font-weight:600;border-color:#b9d2ff}
+  .campus-switch{display:flex;gap:6px;padding:4px;margin:0 0 14px;background:var(--line);border-radius:10px;width:max-content;max-width:100%}
+  .campus-tab{border:0;border-radius:7px;padding:10px 16px;background:transparent;color:var(--text);font:inherit;cursor:pointer}
+  .campus-tab[aria-selected="true"]{background:var(--card);font-weight:600;box-shadow:0 1px 3px #0002}
+  .grid{display:grid;grid-template-columns:1.25fr 1fr;gap:18px}
+  @media(max-width:820px){.grid{grid-template-columns:1fr}}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
+  svg{width:100%;height:auto;display:block}
+  .bld rect{stroke-width:2;stroke:transparent;cursor:pointer;transition:opacity .2s}
+  .bld text{fill:#fff;font-size:12px;text-anchor:middle;pointer-events:none}
+  .bld.dim{opacity:.18}
+  .bld.sel rect{stroke:#0f172a}
+  .road{stroke:var(--line);stroke-width:8;stroke-linecap:round;fill:none}
+  .route{stroke:var(--accent);stroke-width:3;stroke-dasharray:6 6;fill:none;stroke-linecap:round}
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:10px;color:var(--muted);font-size:.9rem}
+  .dot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+  .badge{display:inline-block;color:#fff;padding:5px 14px;border-radius:999px;font-weight:600;font-size:.9rem}
+  .head{display:flex;justify-content:space-between;align-items:center}
+  .code{font-family:Consolas,monospace;font-style:italic;color:var(--muted)}
+  h2{margin:14px 0 8px;font-size:1.7rem;font-weight:500}
+  .desc{color:var(--muted);line-height:1.5;margin:0 0 14px}
+  .hours{font-family:Consolas,monospace;font-style:italic}
+  h3{margin:0 0 12px;font-weight:500;font-size:1.25rem}
+  .sel-row{display:flex;gap:12px}
+  .sel-row label{flex:1;font-size:.9rem;color:var(--muted)}
+  select{width:100%;margin-top:6px;padding:10px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--text);font-size:1rem}
+  .run-btn{width:100%;margin-top:14px;padding:11px 16px;border:0;border-radius:10px;background:var(--accent);color:#fff;font-size:1rem;font-weight:600;cursor:pointer}
+  .run-btn:hover{filter:brightness(.92)}
+  .run-btn:focus-visible{outline:3px solid var(--text);outline-offset:3px}
+  .voice-controls{display:flex;gap:8px;margin-top:10px}
+  .voice-controls button{flex:1;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--text);font:inherit;cursor:pointer}
+  .request-controls{margin-top:12px}
+  .request-controls button{background:#e7f2ed;color:#176b45;border-color:#b6d8c8;font-weight:600}
+  .voice-controls button:first-child{background:#e7f2ed;color:#176b45;border-color:#b6d8c8;font-weight:600}
+  .voice-controls button:disabled{opacity:.5;cursor:not-allowed}
+  .voice-status{min-height:1.4em;margin:8px 0 0;color:var(--muted);font-size:.9rem}
+  .location-status{min-height:1.4em;margin:8px 0;color:var(--muted);font-size:.9rem}
+  .live-map{width:100%;height:320px;border:1px solid var(--line);border-radius:8px;display:block}
+  .camera-preview{display:block;width:100%;max-height:320px;object-fit:contain;margin-top:10px;border-radius:8px;background:#101820}
+  .photo-destination{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(180px,1fr);gap:12px;align-items:start;margin-top:10px}
+  .location-photo{display:block;width:100%;max-height:320px;object-fit:contain;border-radius:8px;background:var(--bg)}
+  .photo-destination label{display:block;color:var(--muted);font-size:.9rem}
+  .photo-destination input{width:100%;margin-top:6px;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);font:inherit}
+  .photo-destination .run-btn{margin-top:8px}
+  .photo-link{display:block;margin-top:10px;color:var(--accent);font-weight:600}
+  @media(max-width:560px){.photo-destination{grid-template-columns:1fr}}
+  .res{display:flex;justify-content:space-between;margin-top:16px;font-family:Consolas,monospace}
+  .res small{display:block;font-style:italic;color:var(--muted)}
+  .res strong{font-size:1.4rem}
+  .res .time{text-align:right}
+  .res .time strong{color:var(--accent);font-size:1.15rem}
+  .route-note{margin:14px 0 6px;color:var(--muted);font-size:.85rem;line-height:1.45}
+  .directions{margin:8px 0 0;padding-left:24px;color:var(--text);line-height:1.5}
+  .directions li{padding:5px 0 5px 4px}
+  .directions li::marker{color:var(--accent);font-weight:700}
+</style>
 </head>
 <body>
-	<p><a href="238.html">Go to the MANICALAND STATE UNIVERSITY OF APPLIED SCIENCES Career Hub</a></p>
+<div class="wrap">
+  <h1>Campus Directory</h1>
+  <p class="sub">Choose a campus to browse its facilities and estimated walking routes</p>
+
+  <div class="campus-switch" id="campus-switch" role="tablist" aria-label="Choose campus"></div>
+  <div class="tabs" id="tabs"></div>
+
+  <div class="grid">
+    <div class="panel">
+      <svg viewBox="0 0 560 400" id="map" role="img" aria-label="Campus map">
+        <g id="roads"></g>
+        <path id="route" class="route" d=""/>
+        <g id="buildings"></g>
+      </svg>
+      <button class="run-btn" id="show-location" type="button">Show my current location</button>
+      <p class="location-status" id="location-status" aria-live="polite">Uses your browser location and OpenStreetMap; internet access is required.</p>
+      <div class="voice-controls">
+        <button id="open-camera" type="button">Open camera</button>
+        <button id="capture-photo" type="button" disabled>Take photo</button>
+        <button id="cancel-camera" type="button" disabled>Cancel</button>
+      </div>
+      <video class="camera-preview" id="camera-preview" autoplay playsinline muted hidden></video>
+      <p class="location-status" id="photo-status" aria-live="polite">Captured photos appear here with a GPS label when location access is allowed.</p>
+      <div class="photo-destination">
+        <img class="location-photo" id="photo-preview" alt="Captured campus photo labeled with GPS coordinates" hidden>
+        <div>
+          <label for="photo-destination-input">Destination
+            <input id="photo-destination-input" type="text" list="campus-destinations" placeholder="Type a place or building">
+          </label>
+          <datalist id="campus-destinations"></datalist>
+          <button class="run-btn" id="photo-route" type="button" disabled>Find walking directions</button>
+          <a class="photo-link" id="external-directions" target="_blank" rel="noopener" hidden>Open walking route in Google Maps</a>
+        </div>
+      </div>
+      <p class="location-status">Your coordinates are shared with Google Maps only when you open walking directions. Campus paths may not all be mapped there.</p>
+      <a class="photo-link" id="download-photo" download="campus-location.jpg" hidden>Download labeled photo</a>
+      <div id="live-map-container" hidden>
+        <iframe class="live-map" id="live-map" title="OpenStreetMap showing your current location" loading="lazy"></iframe>
+      </div>
+      <div class="legend" id="legend"></div>
+    </div>
+
+    <div>
+      <div class="panel" id="info" style="margin-bottom:18px"></div>
+      <div class="panel">
+        <h3>Walking Route Estimator</h3>
+        <div class="sel-row">
+          <label>Start Location<select id="from"></select></label>
+          <label>Destination<select id="to"></select></label>
+        </div>
+        <div class="voice-controls request-controls">
+          <button id="voice-request" type="button" aria-pressed="false">Ask for directions by voice</button>
+        </div>
+        <button class="run-btn" id="run-route" type="button">Find route &amp; directions</button>
+        <div class="voice-controls">
+          <button id="speak-route" type="button" disabled>Start voice guidance</button>
+          <button id="stop-voice" type="button" disabled>Stop</button>
+        </div>
+        <p class="voice-status" id="voice-status" aria-live="polite"></p>
+        <div class="res" aria-live="polite">
+          <div><small>Est. Distance</small><strong id="dist">–</strong></div>
+          <div class="time"><small>Est. Walk Time</small><strong id="time">–</strong></div>
+        </div>
+        <p class="route-note">Voice directions use schematic paths and do not start from your GPS position. The separate location map shows your browser position; facility locations and paths remain illustrative placeholders.</p>
+        <ol class="directions" id="directions" aria-live="polite"></ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const CATS = {
+  "Administration":{color:"var(--admin)"},
+  "Academic":{color:"var(--acad)"},
+  "Amenities":{color:"var(--amen)"},
+  "Health & Housing":{color:"var(--health)"},
+  "Sports & Recreation":{color:"var(--sports)"}
+};
+const facility=(code,name,cat,x,y,extra={})=>({code,name,cat,x,y,desc:"Campus facility; exact position and details are to be confirmed.",hours:"Hours not listed",...extra});
+let B = [
+  facility("MPH","MPH Hall","Academic",280,75),
+  facility("CHP","CHAPPEL","Academic",455,100),
+  facility("HOS","Hospital","Health & Housing",470,230),
+  facility("DIN","Dining Hall","Amenities",320,200),
+  facility("GRD","Grounds","Sports & Recreation",100,320,{w:135,h:64}),
+  facility("REC","Reception","Administration",130,120),
+  facility("ACC","Accounts","Administration",285,145),
+  facility("RES","Students Res","Amenities",100,225),
+  facility("LIB","Library","Academic",320,260),
+  facility("LEC","Lecture Rooms","Academic",320,320),
+  facility("WC","Public Toilets","Amenities",470,320),
+  facility("TUC","Tuckshop","Amenities",200,380)
+];
+let PATHS = [["REC","MPH"],["REC","CHP"],["CHP","HOS"],["REC","ACC"],["ACC","DIN"],["DIN","LIB"],["LIB","LEC"],["LEC","WC"],["DIN","TUC"],["REC","RES"],["RES","GRD"],["GRD","TUC"]];
+const CAMPUS_DATA = {
+  main:{name:"Main Campus",buildings:B,paths:PATHS},
+  telone:{
+    name:"TelOne Campus",
+    buildings:[
+      facility("REC","Reception","Administration",130,110),
+      facility("GSB","GSB Hall","Academic",310,95),
+      facility("PRK","Parking","Amenities",90,250),
+      facility("WC","Toilets","Amenities",480,250),
+      facility("DIN","Dining Hall","Amenities",285,230),
+      facility("LAB","N Labs","Academic",450,120),
+      facility("HOS","Hospital","Health & Housing",400,350),
+      facility("LIB","Library","Academic",210,345)
+    ],
+    paths:[["REC","GSB"],["REC","PRK"],["GSB","LAB"],["GSB","DIN"],["PRK","DIN"],["LAB","WC"],["DIN","LIB"],["LIB","HOS"],["WC","HOS"]]
+  }
+};
+let activeCampus="main";
+const W=130,H=64, M_PER_UNIT=1.6, WALK_M_PER_MIN=70;
+let filter="All Buildings", selected=B[0], tabs=["All Buildings",...Object.keys(CATS)];
+let activeRecognition=null;
+let currentPosition=null, photoObjectUrl=null, capturedPhotoCanvas=null;
+let cameraStream=null;
+
+const $=id=>document.getElementById(id);
+const trunc=(s,n)=>s.length>n?s.slice(0,n-1)+"…":s;
+const metersBetween=(a,b)=>Math.round(Math.hypot(a.x-b.x,a.y-b.y)*M_PER_UNIT*1.15);
+
+function findRoute(startCode,destinationCode){
+  const distances=new Map(B.map(building=>[building.code,Infinity]));
+  const previous=new Map();
+  const unvisited=new Set(B.map(building=>building.code));
+  distances.set(startCode,0);
+  while(unvisited.size){
+    let currentCode=null;
+    for(const code of unvisited){
+      if(currentCode===null||distances.get(code)<distances.get(currentCode)) currentCode=code;
+    }
+    if(currentCode===null||!Number.isFinite(distances.get(currentCode))) break;
+    if(currentCode===destinationCode) break;
+    unvisited.delete(currentCode);
+    for(const [first,second] of PATHS){
+      const neighbor=first===currentCode?second:second===currentCode?first:null;
+      if(!neighbor||!unvisited.has(neighbor)) continue;
+      const current=B.find(building=>building.code===currentCode);
+      const next=B.find(building=>building.code===neighbor);
+      const candidate=distances.get(currentCode)+Math.hypot(current.x-next.x,current.y-next.y);
+      if(candidate<distances.get(neighbor)){
+        distances.set(neighbor,candidate);
+        previous.set(neighbor,currentCode);
+      }
+    }
+  }
+  if(startCode!==destinationCode&&!previous.has(destinationCode)) return [];
+  const codes=[destinationCode];
+  while(codes[0]!==startCode) codes.unshift(previous.get(codes[0]));
+  return codes.map(code=>B.find(building=>building.code===code));
+}
+
+function heading(from,to){
+  const directions=["east","southeast","south","southwest","west","northwest","north","northeast"];
+  const octant=Math.round(Math.atan2(to.y-from.y,to.x-from.x)/(Math.PI/4));
+  return directions[(octant+8)%8];
+}
+
+function turnAt(previous,current,next){
+  const incomingX=current.x-previous.x, incomingY=current.y-previous.y;
+  const outgoingX=next.x-current.x, outgoingY=next.y-current.y;
+  const cross=incomingX*outgoingY-incomingY*outgoingX;
+  if(Math.abs(cross)<1) return "continue straight";
+  return cross>0?"turn right":"turn left";
+}
+
+function renderDirections(route){
+  if(route.length===1){
+    $("directions").innerHTML=`<li>You are already at ${route[0].name}.</li>`;
+    return;
+  }
+  const steps=[`Start at ${route[0].name}. Walk ${heading(route[0],route[1])} toward ${route[1].name} for about ${metersBetween(route[0],route[1])} m.`];
+  for(let index=1;index<route.length-1;index++){
+    const current=route[index], next=route[index+1];
+    steps.push(`${turnAt(route[index-1],current,next)} at ${current.name}; continue ${heading(current,next)} toward ${next.name} for about ${metersBetween(current,next)} m.`);
+  }
+  steps.push(`You have arrived at ${route[route.length-1].name}.`);
+  $("directions").innerHTML=steps.map(step=>`<li>${step}</li>`).join("");
+}
+
+function startVoiceGuidance(){
+  if(!("speechSynthesis" in window)){
+    $("voice-status").textContent="Voice guidance is not supported by this browser.";
+    return;
+  }
+  const steps=[...$("directions").querySelectorAll("li")].map(item=>item.textContent);
+  if(!steps.length) return;
+  speechSynthesis.cancel();
+  $("stop-voice").disabled=false;
+  let index=0;
+  const speakNext=()=>{
+    if(index>=steps.length){
+      $("voice-status").textContent="Voice directions complete.";
+      $("stop-voice").disabled=true;
+      return;
+    }
+    $("voice-status").textContent=`Step ${index+1} of ${steps.length}: ${steps[index]}`;
+    const utterance=new SpeechSynthesisUtterance(steps[index]);
+    utterance.onend=()=>{index++;speakNext();};
+    utterance.onerror=()=>{$("voice-status").textContent="Voice guidance stopped.";$("stop-voice").disabled=true;};
+    speechSynthesis.speak(utterance);
+  };
+  speakNext();
+}
+
+function stopVoiceGuidance(){
+  if("speechSynthesis" in window) speechSynthesis.cancel();
+  $("stop-voice").disabled=true;
+  $("voice-status").textContent="Voice guidance stopped.";
+}
+
+function handleVoiceRequest(transcript){
+  const text=transcript.toLowerCase().replace(/[^a-z0-9\s]/g," ").replace(/\s+/g," ").trim();
+  const extraAliases={MPH:["mph"],CHP:["chapel"],RES:["student residence","residences","hostel"],GRD:["sports grounds","field"],TUC:["tuck shop"]};
+  const mentions=B.flatMap(building=>[building.name.toLowerCase(),...(extraAliases[building.code]||[])].flatMap(name=>{
+    const index=text.indexOf(name);
+    return index<0?[]:[{code:building.code,index,end:index+name.length}];
+  })).sort((a,b)=>a.index-b.index||b.end-a.end);
+  const uniqueMentions=mentions.filter((mention,index)=>mentions.findIndex(item=>item.code===mention.code)===index);
+  const fromIndex=text.indexOf("from "), toIndex=text.indexOf("to ");
+  let startMention=null, destinationMention=null;
+  if(fromIndex>=0&&toIndex>fromIndex){
+    startMention=uniqueMentions.find(item=>item.index>=fromIndex+5&&item.index<toIndex);
+    destinationMention=uniqueMentions.find(item=>item.index>=toIndex+3);
+  }else if(toIndex>=0){
+    destinationMention=uniqueMentions.find(item=>item.index>=toIndex+3&&(fromIndex<0||item.index<fromIndex));
+    if(fromIndex>=0) startMention=uniqueMentions.find(item=>item.index>=fromIndex+5);
+  }else if(uniqueMentions.length===1){
+    destinationMention=uniqueMentions[0];
+  }
+  if(!destinationMention){
+    $("voice-status").textContent=`I heard "${transcript}". Try naming a destination, or say "from parking to library."`;
+    return;
+  }
+  if(startMention) $("from").value=startMention.code;
+  $("to").value=destinationMention.code;
+  selected=B.find(building=>building.code===destinationMention.code);
+  drawInfo(); drawMap(); estimate();
+}
+
+function startVoiceRequest(){
+  if(activeRecognition){
+    activeRecognition.stop();
+    return;
+  }
+  const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!Recognition){
+    $("voice-status").textContent="Speech input is not supported in this browser. Choose locations from the menus instead.";
+    return;
+  }
+  const recognition=new Recognition();
+  activeRecognition=recognition;
+  recognition.lang="en-US";
+  recognition.interimResults=false;
+  recognition.maxAlternatives=1;
+  recognition.onstart=()=>{
+    $("voice-request").setAttribute("aria-pressed","true");
+    $("voice-request").textContent="Stop listening";
+    $("voice-status").textContent="Listening for a campus destination.";
+  };
+  recognition.onresult=event=>{
+    const transcript=event.results?.[0]?.[0]?.transcript?.trim();
+    if(transcript) handleVoiceRequest(transcript);
+    else $("voice-status").textContent="No words were recognized. Try again or type your destination.";
+  };
+  recognition.onerror=event=>{
+    const messages={
+      "not-allowed":"Microphone access was denied. Allow microphone access in browser settings and try again.",
+      "service-not-allowed":"Speech recognition is blocked by the browser. Check microphone and speech permissions.",
+      "no-speech":"No speech was detected. Move closer to the microphone and try again.",
+      "audio-capture":"No working microphone was found. Check your device microphone.",
+      network:"Speech recognition needs an internet connection. Check your connection and try again.",
+      aborted:"Listening stopped.",
+      "language-not-supported":"This browser does not support the selected speech language."
+    };
+    $("voice-status").textContent=messages[event.error]||`Speech recognition failed (${event.error||"unknown error"}). You can choose a destination from the menus.`;
+  };
+  recognition.onend=()=>{
+    if(activeRecognition===recognition){
+      activeRecognition=null;
+      $("voice-request").setAttribute("aria-pressed","false");
+      $("voice-request").textContent="Ask for directions by voice";
+    }
+  };
+  try{
+    $("voice-request").setAttribute("aria-pressed","true");
+    $("voice-request").textContent="Starting microphone...";
+    $("voice-status").textContent="Starting speech recognition...";
+    recognition.start();
+  }catch(error){
+    if(activeRecognition===recognition) activeRecognition=null;
+    $("voice-request").setAttribute("aria-pressed","false");
+    $("voice-request").textContent="Ask for directions by voice";
+    const message=error.name==="NotAllowedError"?"Microphone access was denied. Allow microphone access in browser settings and try again.":"Could not start speech recognition. Check microphone permission and try again.";
+    $("voice-status").textContent=message;
+  }
+}
+
+function showCurrentLocation(){
+  if(!navigator.geolocation){
+    $("location-status").textContent="Location is not supported by this browser.";
+    return;
+  }
+  const button=$("show-location");
+  button.disabled=true;
+  $("location-status").textContent="Waiting for location permission...";
+  navigator.geolocation.getCurrentPosition(position=>{
+    currentPosition=position;
+    $("photo-route").disabled=false;
+    if(capturedPhotoCanvas){
+      const {latitude,longitude}=position.coords;
+      renderCapturedPhoto(capturedPhotoCanvas,`GPS: ${latitude.toFixed(6)}, ${longitude.toFixed(6)}`);
+    }
+    const latitude=position.coords.latitude;
+    const longitude=position.coords.longitude;
+    const latitudeDelta=0.005;
+    const longitudeDelta=latitudeDelta/Math.max(Math.cos(latitude*Math.PI/180),0.2);
+    const south=Math.max(-85,latitude-latitudeDelta).toFixed(6);
+    const north=Math.min(85,latitude+latitudeDelta).toFixed(6);
+    const west=(longitude-longitudeDelta).toFixed(6);
+    const east=(longitude+longitudeDelta).toFixed(6);
+    const marker=`${latitude.toFixed(6)},${longitude.toFixed(6)}`;
+    $("live-map").src=`https://www.openstreetmap.org/export/embed.html?bbox=${west},${south},${east},${north}&layer=mapnik&marker=${marker}`;
+    $("live-map-container").hidden=false;
+    $("location-status").textContent=`Your location is marked on OpenStreetMap (accuracy about ${Math.round(position.coords.accuracy)} m).`;
+    button.disabled=false;
+  },error=>{
+    const messages={
+      1:"Location permission was denied. Allow location access in your browser settings and try again.",
+      2:"Your current location is unavailable. Check your device location settings and try again.",
+      3:"Location request timed out. Please try again."
+    };
+    $("location-status").textContent=messages[error.code]||"Could not get your location. Please try again.";
+    button.disabled=false;
+  },{enableHighAccuracy:true,timeout:15000,maximumAge:0});
+}
+
+async function openCamera(){
+  if(!navigator.mediaDevices?.getUserMedia){
+    $("photo-status").textContent="Camera access is unavailable here. Open this page on HTTPS or localhost and allow camera access.";
+    return;
+  }
+  $("open-camera").disabled=true;
+  $("photo-status").textContent="Waiting for camera permission...";
+  try{
+    cameraStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:"environment"}},audio:false});
+    const video=$("camera-preview");
+    video.srcObject=cameraStream;
+    video.hidden=false;
+    await video.play();
+    $("capture-photo").disabled=false;
+    $("cancel-camera").disabled=false;
+    $("open-camera").disabled=false;
+    $("photo-status").textContent="Camera is on. Position the scene, then take a photo.";
+  }catch(error){
+    stopCamera();
+    const messages={
+      NotAllowedError:"Camera permission was denied. Allow camera access in your browser settings and try again.",
+      NotFoundError:"No camera was found on this device.",
+      NotReadableError:"The camera is busy in another app. Close it there and try again."
+    };
+    $("photo-status").textContent=messages[error.name]||"Could not open the camera. Try again from HTTPS or localhost.";
+  }
+}
+
+function stopCamera(){
+  if(cameraStream) cameraStream.getTracks().forEach(track=>track.stop());
+  cameraStream=null;
+  const video=$("camera-preview");
+  video.pause();
+  video.srcObject=null;
+  video.hidden=true;
+  $("capture-photo").disabled=true;
+  $("cancel-camera").disabled=true;
+  $("open-camera").disabled=false;
+}
+
+function renderCapturedPhoto(frame,label){
+  const stamped=document.createElement("canvas");
+  stamped.width=frame.width;
+  stamped.height=frame.height;
+  const context=stamped.getContext("2d");
+  context.drawImage(frame,0,0);
+  const bandHeight=Math.max(44,Math.round(frame.height*0.1));
+  context.fillStyle="rgba(10,18,24,0.78)";
+  context.fillRect(0,frame.height-bandHeight,frame.width,bandHeight);
+  context.fillStyle="#ffffff";
+  context.font=`${Math.max(16,Math.round(frame.width/42))}px sans-serif`;
+  context.fillText(label,16,frame.height-Math.round(bandHeight/3),frame.width-32);
+  stamped.toBlob(blob=>{
+    if(!blob){
+      $("photo-status").textContent="The photo could not be saved. Please try again.";
+      return;
+    }
+    if(photoObjectUrl) URL.revokeObjectURL(photoObjectUrl);
+    photoObjectUrl=URL.createObjectURL(blob);
+    $("photo-preview").src=photoObjectUrl;
+    $("photo-preview").hidden=false;
+    $("download-photo").href=photoObjectUrl;
+    $("download-photo").hidden=false;
+  },"image/jpeg",0.9);
+}
+
+function capturePhoto(){
+  const video=$("camera-preview");
+  if(!cameraStream||!video.videoWidth||!video.videoHeight){
+    $("photo-status").textContent="Wait for the camera preview, then try taking the photo again.";
+    return;
+  }
+  const canvas=document.createElement("canvas");
+  canvas.width=video.videoWidth;
+  canvas.height=video.videoHeight;
+  canvas.getContext("2d").drawImage(video,0,0,canvas.width,canvas.height);
+  capturedPhotoCanvas=canvas;
+  stopCamera();
+  $("open-camera").textContent="Retake photo";
+  $("photo-status").textContent="Photo captured. Adding GPS coordinates...";
+  if(!navigator.geolocation){
+    renderCapturedPhoto(canvas,"GPS location unavailable");
+    $("photo-status").textContent="Photo captured, but this browser cannot provide a GPS location.";
+    return;
+  }
+  navigator.geolocation.getCurrentPosition(position=>{
+    currentPosition=position;
+    $("photo-route").disabled=false;
+    const {latitude,longitude}=position.coords;
+    renderCapturedPhoto(canvas,`GPS: ${latitude.toFixed(6)}, ${longitude.toFixed(6)}`);
+    $("photo-status").textContent=`Photo labeled with GPS coordinates (accuracy about ${Math.round(position.coords.accuracy)} m).`;
+  },()=>{
+    renderCapturedPhoto(canvas,"GPS location unavailable");
+    $("photo-status").textContent="Photo captured, but GPS permission or location is unavailable.";
+  },{enableHighAccuracy:true,timeout:15000,maximumAge:0});
+}
+
+function findWalkingDirections(){
+  const destination=$("photo-destination-input").value.trim();
+  if(!destination){
+    $("photo-status").textContent="Type a destination first.";
+    return;
+  }
+  if(!currentPosition){
+    $("photo-status").textContent="Take a photo or show your current location first.";
+    return;
+  }
+  const directionsUrl=new URL("https://www.google.com/maps/dir/");
+  directionsUrl.search=new URLSearchParams({
+    api:"1",
+    origin:`${currentPosition.coords.latitude},${currentPosition.coords.longitude}`,
+    destination:`${destination}, ${CAMPUS_DATA[activeCampus].name}, Gweru, Zimbabwe`,
+    travelmode:"walking"
+  });
+  $("external-directions").href=directionsUrl.href;
+  $("external-directions").hidden=false;
+  $("photo-status").textContent=`Walking directions are ready from your GPS location to ${destination}.`;
+}
+
+function updateCampusDestinations(){
+  $("campus-destinations").innerHTML=B.map(building=>`<option value="${building.name}"></option>`).join("");
+  $("photo-destination-input").value="";
+  $("external-directions").hidden=true;
+}
+
+function drawTabs(){
+  $("tabs").innerHTML=tabs.map(t=>`<button class="tab ${t===filter?'active':''}" data-t="${t}">${t}</button>`).join("");
+  $("tabs").querySelectorAll("button").forEach(b=>b.onclick=()=>{filter=b.dataset.t;drawTabs();drawMap();});
+}
+function drawCampusSwitch(){
+  const campusSwitch=$("campus-switch");
+  campusSwitch.innerHTML=Object.entries(CAMPUS_DATA).map(([key,campus])=>`<button class="campus-tab" type="button" role="tab" aria-selected="${key===activeCampus}" data-campus="${key}">${campus.name}</button>`).join("");
+  campusSwitch.querySelectorAll("button").forEach(button=>button.onclick=()=>{
+    activeCampus=button.dataset.campus;
+    B=CAMPUS_DATA[activeCampus].buildings;
+    PATHS=CAMPUS_DATA[activeCampus].paths;
+    filter="All Buildings";
+    selected=B[0];
+    const options=B.map(building=>`<option value="${building.code}">${building.name}</option>`).join("");
+    $("from").innerHTML=options; $("to").innerHTML=options;
+    $("from").value=B[0].code; $("to").value=B[1].code;
+    updateCampusDestinations();
+    drawCampusSwitch(); drawTabs(); drawMap(); drawInfo(); clearEstimate();
+  });
+}
+function drawMap(){
+  $("map").setAttribute("aria-label",`${CAMPUS_DATA[activeCampus].name} schematic map`);
+  $("roads").innerHTML=PATHS.map(([fromCode,toCode])=>{
+    const from=B.find(building=>building.code===fromCode), to=B.find(building=>building.code===toCode);
+    return `<path class="road" d="M${from.x} ${from.y} L${to.x} ${to.y}"/>`;
+  }).join("");
+  $("buildings").innerHTML=B.map(b=>{
+    const dim = filter!=="All Buildings" && b.cat!==filter;
+    const width=b.w||W, height=b.h||H;
+    return `<g class="bld ${dim?'dim':''} ${b===selected?'sel':''}" data-c="${b.code}">
+      <rect x="${b.x-width/2}" y="${b.y-height/2}" width="${width}" height="${height}" rx="8" fill="${CATS[b.cat].color}"/>
+      <text x="${b.x}" y="${b.y-4}">${b.code}</text>
+      <text x="${b.x}" y="${b.y+14}">${trunc(b.name,16)}</text></g>`;
+  }).join("");
+  $("buildings").querySelectorAll(".bld").forEach(g=>g.onclick=()=>{
+    selected=B.find(b=>b.code===g.dataset.c);
+    $("from").value=selected.code; drawInfo(); clearEstimate(); drawMap();
+  });
+}
+function drawInfo(){
+  const b=selected;
+  $("info").innerHTML=`<div class="head"><span class="badge" style="background:${CATS[b.cat].color}">${b.cat}</span><span class="code">CODE: ${b.code}</span></div>
+  <h2>${b.name}</h2><p class="desc">${b.desc}</p><div class="hours">Hours: ${b.hours}</div>`;
+}
+function estimate(){
+  if("speechSynthesis" in window) speechSynthesis.cancel();
+  $("voice-status").textContent="";
+  $("stop-voice").disabled=true;
+  const a=B.find(x=>x.code===$("from").value), d=B.find(x=>x.code===$("to").value);
+  const route=findRoute(a.code,d.code);
+  if(!route.length){
+    $("dist").textContent="No route";
+    $("time").textContent="–";
+    $("route").setAttribute("d","");
+    $("directions").innerHTML="<li>No connected campus path was found.</li>";
+    $("speak-route").disabled=true;
+    return;
+  }
+  const m=route.slice(1).reduce((total,building,index)=>total+metersBetween(route[index],building),0);
+  $("dist").textContent=a===d?"0 m":m+" m";
+  $("time").textContent=a===d?"You're here":Math.max(1,Math.round(m/WALK_M_PER_MIN))+" min walk";
+  $("route").setAttribute("d",route.length===1?"":`M${route.map(building=>`${building.x} ${building.y}`).join(" L")}`);
+  renderDirections(route);
+  $("speak-route").disabled=false;
+}
+function clearEstimate(){
+  if("speechSynthesis" in window) speechSynthesis.cancel();
+  $("voice-status").textContent="";
+  $("speak-route").disabled=true;
+  $("stop-voice").disabled=true;
+  $("dist").textContent="–";
+  $("time").textContent="–";
+  $("route").setAttribute("d","");
+  $("directions").innerHTML="";
+}
+function init(){
+  const opts=B.map(b=>`<option value="${b.code}">${b.name}</option>`).join("");
+  $("from").innerHTML=opts; $("to").innerHTML=opts;
+  $("from").value=B[0].code; $("to").value=B[1].code;
+  $("from").onchange=()=>{selected=B.find(b=>b.code===$("from").value);drawInfo();drawMap();clearEstimate();};
+  $("to").onchange=clearEstimate;
+  $("run-route").onclick=estimate;
+  $("voice-request").onclick=startVoiceRequest;
+  $("show-location").onclick=showCurrentLocation;
+  $("open-camera").onclick=openCamera;
+  $("capture-photo").onclick=capturePhoto;
+  $("cancel-camera").onclick=()=>{stopCamera();$("photo-status").textContent="Camera closed. No photo was taken.";};
+  $("photo-route").onclick=findWalkingDirections;
+  $("speak-route").onclick=startVoiceGuidance;
+  $("stop-voice").onclick=stopVoiceGuidance;
+  $("legend").innerHTML=Object.entries(CATS).map(([k,v])=>`<span><i class="dot" style="background:${v.color}"></i>${k}</span>`).join("");
+  updateCampusDestinations(); drawCampusSwitch(); drawTabs(); drawMap(); drawInfo(); clearEstimate();
+}
+init();
+</script>
 </body>
 </html>
