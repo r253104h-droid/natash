@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="theme-color" content="#153f73">
+	<title>Opportunities &amp; Career Support | Midlands State University Careers</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="238.css">
+	<script src="https://cdn.jsdelivr.net/npm/p5@1.11.3/lib/p5.min.js" defer></script>
+	<script src="238.js" defer></script>
+</head>
+<body>
+	<header class="topbar">
+		<a class="brand" href="238.html" aria-label="Midlands State University Careers home">
+			<img class="brand-logo" src="MSU_LOGO.jpeg" alt="Midlands State University logo">
+			<span class="brand-name">MIDLANDS STATE UNIVERSITY<span>Career Hub</span></span>
+		</a>
+		<nav class="nav" aria-label="Main navigation">
+			<a href="238.html">Home</a>
+			<a class="active" href="opportunities.html" aria-current="page">Opportunities &amp; support</a>
+			<a href="events.html">Events</a>
+		</nav>
+		<a class="student-link" href="#career-support"><span class="student-avatar" aria-hidden="true">S</span><span>Student hub</span></a>
+	</header>
+	<section class="page-banner"><div class="page-banner-inner"><p class="eyebrow">Find your next step</p><h1>Opportunities &amp; support</h1><p class="hero-copy">Explore roles, then find practical guidance for your next move.</p></div></section>
+	<form class="search-shell" id="searchForm" role="search">
+		<div class="search-box">
+			<div class="search-field"><span class="search-icon" aria-hidden="true">⌕</span><div class="search-input-group"><label for="keyword">I'm looking for</label><input id="keyword" type="search" placeholder="Role, employer or keyword"></div></div>
+			<div class="search-field"><span class="search-icon" aria-hidden="true">⌖</span><div class="search-input-group"><label for="workType">Opportunity type</label><select id="workType"><option value="">All opportunities</option><option value="Internship">Internships</option><option value="Graduate">Graduate roles</option><option value="Placement">Placements</option><option value="Part-time">Part-time work</option></select></div></div>
+			<div class="search-field"><span class="search-icon" aria-hidden="true">◉</span><div class="search-input-group"><label for="studyArea">Area of study</label><select id="studyArea"><option value="">All study areas</option><option value="computing">Computer Science &amp; ICT</option><option value="business">Business, Economics &amp; Marketing</option><option value="environment">Environmental Science &amp; Agriculture</option><option value="communication">Communication, Media &amp; Design</option><option value="engineering">Engineering &amp; Technology</option></select></div></div>
+			<button class="search-button" type="submit">Find opportunities</button>
+		</div>
+	</form>
+	<section class="study-animation" id="studyAnimation" aria-label="Selected study pathway" hidden>
+		<div><p class="section-kicker">Study pathway selected</p><p class="study-animation-label" id="studyAnimationLabel" role="status" aria-live="polite"></p></div>
+		<div class="study-canvas" id="studyCanvas" aria-hidden="true"></div>
+	</section>
+	<main class="main subpage-main" id="opportunities">
+		<div class="welcome-row"><div><p class="section-kicker">Browse and filter</p><h2>Find your kind of work.</h2></div><span class="welcome-note">New roles are added regularly.</span></div>
+		<section aria-labelledby="jobsHeading">
+			<div class="opportunity-head"><h3 id="jobsHeading">Available opportunities</h3><span class="result-count" id="resultCount" aria-live="polite"></span></div>
+			<div class="filters" role="group" aria-label="Filter by career area">
+				<button class="filter-chip" type="button" data-category="all" aria-pressed="true">All roles</button>
+				<button class="filter-chip" type="button" data-category="Technology" aria-pressed="false">Technology</button>
+				<button class="filter-chip" type="button" data-category="Business" aria-pressed="false">Business</button>
+				<button class="filter-chip" type="button" data-category="Creative" aria-pressed="false">Creative</button>
+				<button class="filter-chip" type="button" data-category="Science" aria-pressed="false">Science</button>
+			</div>
+			<div class="job-list" id="jobList">
+				<article class="job-card" data-title="product design intern brightside studio technology creative" data-type="Internship" data-category="Technology Creative" data-study="computing communication"><div class="company-mark mark-blue" aria-hidden="true">b</div><div class="job-info"><p class="job-company">Brightside Studio</p><h4 class="job-title">Product Design Intern</h4><div class="job-meta"><span>⌖ London · Hybrid</span><span>◷ Posted 2 days ago</span></div><div class="job-tags"><span class="tag featured">Featured</span><span class="tag">Internship</span><span class="tag">Technology</span></div></div><button class="save-button" type="button" aria-label="Save Product Design Intern" aria-pressed="false" title="Save opportunity">♡</button></article>
+				<article class="job-card" data-title="graduate sustainability analyst greenline energy science business" data-type="Graduate" data-category="Science Business" data-study="environment engineering"><div class="company-mark mark-green" aria-hidden="true">g</div><div class="job-info"><p class="job-company">Greenline Energy</p><h4 class="job-title">Graduate Sustainability Analyst</h4><div class="job-meta"><span>⌖ Bristol · On-site</span><span>◷ Posted 4 days ago</span></div><div class="job-tags"><span class="tag">Graduate role</span><span class="tag">Science</span></div></div><button class="save-button" type="button" aria-label="Save Graduate Sustainability Analyst" aria-pressed="false" title="Save opportunity">♡</button></article>
+				<article class="job-card" data-title="junior software engineer orbit health technology" data-type="Graduate" data-category="Technology" data-study="computing engineering"><div class="company-mark mark-coral" aria-hidden="true">o</div><div class="job-info"><p class="job-company">Orbit Health</p><h4 class="job-title">Junior Software Engineer</h4><div class="job-meta"><span>⌖ Remote · UK</span><span>◷ Posted 1 week ago</span></div><div class="job-tags"><span class="tag featured">New</span><span class="tag">Graduate role</span><span class="tag">Technology</span></div></div><button class="save-button" type="button" aria-label="Save Junior Software Engineer" aria-pressed="false" title="Save opportunity">♡</button></article>
+				<article class="job-card" data-title="brand strategy placement north & field creative business" data-type="Placement" data-category="Creative Business" data-study="business communication"><div class="company-mark mark-gold" aria-hidden="true">n</div><div class="job-info"><p class="job-company">North &amp; Field</p><h4 class="job-title">Brand Strategy Placement</h4><div class="job-meta"><span>⌖ Manchester · Hybrid</span><span>◷ Posted 1 week ago</span></div><div class="job-tags"><span class="tag">Placement year</span><span class="tag">Creative</span></div></div><button class="save-button" type="button" aria-label="Save Brand Strategy Placement" aria-pressed="false" title="Save opportunity">♡</button></article>
+				<article class="job-card" data-title="campus communications assistant midlands state university creative part-time" data-type="Part-time" data-category="Creative" data-study="business communication"><div class="company-mark mark-blue" aria-hidden="true">M</div><div class="job-info"><p class="job-company">Midlands State University</p><h4 class="job-title">Campus Communications Assistant</h4><div class="job-meta"><span>⌖ On-campus</span><span>◷ Posted 2 weeks ago</span></div><div class="job-tags"><span class="tag">Part-time</span><span class="tag">Creative</span></div></div><button class="save-button" type="button" aria-label="Save Campus Communications Assistant" aria-pressed="false" title="Save opportunity">♡</button></article>
+			</div>
+			<div class="empty-state" id="emptyState"><strong>No roles found just yet.</strong>Try a different search or choose another career area.</div>
+		</section>
+		<section class="study-pathways" aria-labelledby="pathwaysHeading">
+			<div class="welcome-row"><div><p class="section-kicker">Connect your studies to work</p><h2 id="pathwaysHeading">Company types by study area</h2></div><span class="welcome-note">Explore sectors, then view related roles.</span></div>
+			<div class="study-grid">
+				<article class="study-card"><h3>Computer Science &amp; ICT</h3><p>Common company types</p><ul><li>Software and technology firms</li><li>Telecommunications and fintech</li><li>Digital consultancies and startups</li></ul><button class="study-pathway-link" type="button" data-study-target="computing">Show related roles <span aria-hidden="true">→</span></button></article>
+				<article class="study-card"><h3>Business, Economics &amp; Marketing</h3><p>Common company types</p><ul><li>Banks and financial services</li><li>Consulting, retail and consumer brands</li><li>Marketing and communications agencies</li></ul><button class="study-pathway-link" type="button" data-study-target="business">Show related roles <span aria-hidden="true">→</span></button></article>
+				<article class="study-card"><h3>Environmental Science &amp; Agriculture</h3><p>Common company types</p><ul><li>Renewable energy companies</li><li>Agribusiness and food producers</li><li>Conservation and environmental consultancies</li></ul><button class="study-pathway-link" type="button" data-study-target="environment">Show related roles <span aria-hidden="true">→</span></button></article>
+				<article class="study-card"><h3>Communication, Media &amp; Design</h3><p>Common company types</p><ul><li>Creative and design studios</li><li>Broadcasters, publishers and media houses</li><li>University and corporate communications teams</li></ul><button class="study-pathway-link" type="button" data-study-target="communication">Show related roles <span aria-hidden="true">→</span></button></article>
+				<article class="study-card"><h3>Engineering &amp; Technology</h3><p>Common company types</p><ul><li>Engineering and manufacturing firms</li><li>Energy and infrastructure providers</li><li>Technology product companies</li></ul><button class="study-pathway-link" type="button" data-study-target="engineering">Show related roles <span aria-hidden="true">→</span></button></article>
+			</div>
+		</section>
+		<section class="combined-support" id="career-support" aria-labelledby="supportHeading">
+			<div class="welcome-row"><div><p class="section-kicker">Guidance for every stage</p><button type="button" class="career-support-toggle" id="supportToggle" aria-expanded="false" aria-controls="careerSupportDetails"><span id="supportHeading">Career support</span><span class="toggle-indicator" aria-hidden="true">+</span></button></div><span class="welcome-note">Support is here when you need it.</span></div>
+			<div class="support-grid">
+				<section class="side-panel"><h3 class="side-heading">Talk with an adviser</h3><p class="support-copy">Not sure where to begin? Book a careers chat and talk through your options with an adviser.</p><a class="support-action" href="mailto:careers@northbridge.edu">Book a careers chat <span aria-hidden="true">→</span></a></section>
+				<section class="side-panel"><h3 class="side-heading">Get application-ready</h3><p class="support-copy">Get practical feedback and practice before you apply or interview.</p><div class="resource-links"><a href="mailto:careers@northbridge.edu?subject=CV%20review">Get a CV review</a><a href="mailto:careers@northbridge.edu?subject=Interview%20practice">Practice interviews</a></div></section>
+				<section class="side-panel"><h3 class="side-heading">Explore career paths</h3><p class="support-copy">Consider different industries, roles and ways to build experience during your studies.</p><a class="support-action" href="mailto:careers@northbridge.edu?subject=Career%20planning">Ask about career planning <span aria-hidden="true">→</span></a></section>
+			</div>
+			<div class="career-support-details" id="careerSupportDetails" hidden>
+				<div class="career-support-detail-inner">
+					<h3>How we can help</h3>
+					<ul>
+						<li>Plan your next steps, whether you're looking for a placement, internship or graduate role.</li>
+						<li>Review CVs, cover letters and personal statements before you apply.</li>
+						<li>Prepare for interviews with practical feedback and practice sessions.</li>
+						<li>Explore different sectors and identify the skills employers are looking for.</li>
+					</ul>
+					<p>Appointments are available throughout the year, and you can come back whenever your goals change.</p>
+				</div>
+			</div>
+			<div class="outcomes-section"><p class="section-kicker">Graduate outcomes</p><h2>Where your degree can take you.</h2><div class="stats-strip" aria-label="Midlands State University graduate outcomes"><div class="stat"><strong>92%</strong><span>in work or further study</span></div><div class="stat"><strong>140+</strong><span>employer partners</span></div><div class="stat"><strong>1:1</strong><span>career support</span></div><div class="stat"><strong>All year</strong><span>opportunities added weekly</span></div></div></div>
+		</section>
+	</main>
+	<footer><span>© 2026 Midlands State University · Futures &amp; Careers</span><a href="#career-support">Career support</a></footer>
+	<div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
